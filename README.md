@@ -17,7 +17,7 @@ The software contained in this repository is released under the MIT License.
 [get_data_gov_sg_met.py](get_data_gov_sg_met.py).
 The file naming convention is as follows:
     `data_gov_sg_met_v1/<variable>_<yyyy-mm>_c<today>.csv.gz`
-where <today> is the date on which the file was created. For example,
+where `<today>` is the date on which the file was created. For example,
     `data_gov_sg_met_v1/wind-speed_2017-02_c20170526.csv.gz`.
 
 ### Time interval
@@ -53,11 +53,13 @@ For further information, please see:
 
 ### Suggested acknowledgment
 If you use any of the data published in this repository, I recommend including an acknowledgement
-that makes clear that the data are derived from data published by data.gov.sg, e.g.
+that makes it clear that the data are derived from data published by data.gov.sg, e.g.
 
 *"The data have been downloaded from https://github.com/grandey/access-data-gov-sg, and are
 derived from data published by data.gov.sg (https://data.gov.sg) under the terms of the
 Singapore Open Data License version 1.0 (https://data.gov.sg/open-data-licence)."*
+
+For reproducibility, it might also be a good idea to mention the GitHub commit id.
 
 ## Author
 Benjamin S. Grandey, 2017

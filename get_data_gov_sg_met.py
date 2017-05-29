@@ -2,7 +2,11 @@
 
 """
 get_data_gov_sg_met.py:
-    Download data meteorological station data for a specified month via the data.gov.sg APIs.
+    Download meteorological station data for a specified month via the data.gov.sg APIs.
+
+API key requirement:
+    In order to use this script, an API key needs to be obtained via
+    https://developers.data.gov.sg.
 
 Usage:
     To download a specific month, specify the month (e.g. 2017_02):
@@ -19,11 +23,11 @@ Output files:
     where <today> is the date on which the file was created.
     For example,
         data_gov_sg_met_v1/wind-speed_2017-02_c20170526140800.csv.gz
-    
-Information about data:
-    For information about the input data used to derive these output CSV files, please see
-    https://developers.data.gov.sg and
-    https://github.com/grandey/atmos-scripts/blob/master/explore-apis/data_gov_sg_explore.ipynb
+
+Information about input data:
+    For information about input data used to derive the output CSV files, please see
+    https://developers.data.gov.sg, https://data.gov.sg/open-data-licence, and
+    https://data.gov.sg/api-terms.
     
 Author:
     Benjamin S. Grandey, 2017
@@ -52,7 +56,6 @@ if not os.path.exists(data_dir):
     print('Created {}'.format(data_dir))
 
 
-# Function to attempt to retrieve data for a specific datetime (dt)
 def retrieve_data_via_api(variable, dt, n_attempts=10):
     """
     Function to attempt to retrieve data for a specific datetime.

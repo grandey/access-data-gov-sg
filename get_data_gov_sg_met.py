@@ -2,7 +2,7 @@
 
 """
 get_data_gov_sg_met.py:
-    Download meteorological station data (and air quality data) for a specific month via the
+    Download meteorological station data (and/or air quality data) for a specific month via the
     data.gov.sg APIs.
 
 API key requirement:
@@ -10,12 +10,13 @@ API key requirement:
     https://developers.data.gov.sg.
 
 Usage:
-    To download a specific month, specify the month (e.g. 2017_02):
+    To download a specific month and variable, specify the month (e.g. 2017_02) and variable, e.g.:
+        ./get_data_gov_sg_met.py 2017_02 rainfall
+    To download data for all variables in a specific month, specify just the month:
         ./get_data_gov_sg_met.py 2017_02
-    To download data from last month, just run the script with no command-line arguments:
+    To download data for all variables from last month, just run the script with no command-line
+    arguments:
         ./get_data_gov_sg_met.py
-    This can be performed automatically on e.g. the 2nd day of each month using crontab:
-        0 0 2 * * tar -zcf <path_to_here>/get_data_gov_sg_met.py
 
 Output files:
     Gzipped CSV files, corresponding to different variables, will be saved in data_gov_sg_met_v1/
@@ -87,11 +88,11 @@ def retrieve_data_via_api(variable, dt, n_attempts=10):
             else:
                 result = None
         else:
-            # If API query failed, sleep one minute, then retry recursively (up to n_attempts)
+            # If API query failed, sleep 10s, then retry recursively (up to n_attempts)
             if n_attempts > 1:
                 print('    dt = {}, r.status_code = {}, (n_attempts-1) = {}. '
-                      'Retrying in 60s.'.format(dt, r.status_code, (n_attempts-1)))
-                time.sleep(60)
+                      'Retrying in 10s.'.format(dt, r.status_code, (n_attempts-1)))
+                time.sleep(10)
                 result = retrieve_data_via_api(variable, dt, n_attempts=(n_attempts-1))
             else:
                 print('    dt = {}, r.status_code = {}, (n_attempts-1) = {}. '
@@ -99,16 +100,27 @@ def retrieve_data_via_api(variable, dt, n_attempts=10):
                 result = None
         r.close()
     except (requests.exceptions.SSLError, requests.exceptions.ConnectionError,
-            requests.exceptions.ConnectTimeout, KeyError):
-        # If connection failed, sleep one minute, then retry recursively (up to n_attempts)
+            requests.exceptions.ConnectTimeout):
+        # If connection failed, sleep 10s, then retry recursively (up to n_attempts)
         if n_attempts > 1:
             print('    dt = {}, error = {}, (n_attempts-1) = {}. '
-                  'Retrying in 60s.'.format(dt, sys.exc_info()[0], (n_attempts-1)))
-            time.sleep(60)
+                  'Retrying in 10s.'.format(dt, sys.exc_info()[0], (n_attempts-1)))
+            time.sleep(10)
             result = retrieve_data_via_api(variable, dt, n_attempts=(n_attempts-1))
         else:
             print('    dt = {}, error = {}, (n_attempts-1) = {}. '
                   'FAILED TO CONNECT.'.format(dt, sys.exc_info()[0], (n_attempts-1)))
+            result = None
+    except KeyError:
+        # KeyError is encountered, sleep 10s, then retry once only
+        if n_attempts > 1:
+            print('    dt = {}, error = {}, (n_attempts-1) = {}. '
+                  'Retrying ONCE in 10s.'.format(dt, sys.exc_info()[0], (n_attempts-1)))
+            time.sleep(10)
+            result = retrieve_data_via_api(variable, dt, n_attempts=1)
+        else:
+            print('    dt = {}, error = {}, (n_attempts-1) = {}. '
+                  'FAILED TO RETRIEVE DATA.'.format(dt, sys.exc_info()[0], (n_attempts - 1)))
             result = None
     return result
 
@@ -178,7 +190,12 @@ if __name__ == '__main__':
     except IndexError:  # otherwise get data for last month
         month_ago = (pd.datetime.today() - pd.Timedelta(1, 'M'))  # ~1 month ago (not exact)
         yyyy, mm = month_ago.strftime('%Y_%m').split('_')
+    # Variable(s) to get data for
+    try:
+        variables = [sys.argv[2], ]  # if specified via command-line
+    except IndexError:  # otherwise get data for all variables
+        variables = ['rainfall', 'wind-speed', 'wind-direction', 'air-temperature',
+                     'relative-humidity', 'pm25']
     # Loop over variables
-    for variable in ['pm25', 'rainfall', 'wind-speed', 'wind-direction', 'air-temperature',
-                     'relative-humidity',]:
+    for variable in variables:
         download_month(variable, yyyy, mm)

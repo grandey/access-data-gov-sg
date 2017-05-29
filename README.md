@@ -21,9 +21,8 @@ where <today> is the date on which the file was created. For example,
     `data_gov_sg_met_v1/wind-speed_2017-02_c20170526.csv.gz`.
 
 ### Time interval
-When querying the API, a time interval of **5-minutes** is used. Hence, the shortest time interval
-in the output files is 5-minutes, even if input data are available at a more frequent time
-resolution.
+When querying the API, the following time intervals are used:
+1-hour for pm25; 5-minutes for rainfall; and 1-minute for for the other variables.
 
 ### Metadata
 Based on [explore_data_gov_sg_api.ipynb](explore_data_gov_sg_api.ipynb), the important metadata for

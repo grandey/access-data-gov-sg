@@ -24,11 +24,6 @@ Output files:
     For example,
         data_gov_sg_met_v1/wind-speed_2017-02_c20170526.csv.gz
 
-Time interval:
-    When querying the API, a time interval of 5-minutes is used. Hence, the shortest time interval
-    in the output files is 5-minutes, even if input data are available at a more frequent time
-    resolution.
-
 Information about input data:
     For information about the input data used to derive the output CSV files, please see
     https://developers.data.gov.sg, https://data.gov.sg/open-data-licence, and
@@ -134,10 +129,19 @@ def download_month(variable, yyyy, mm):
     print('variable = {}, yyyy = {}, mm = {}'.format(variable, yyyy, mm))
     # Number of days in month
     ndays = calendar.monthrange(int(yyyy), int(mm))[1]  # supports leap years
-    # Datetime range to search through - at 5-min intervals
+    # Time interval dependent on variable
+    if variable == 'rainfall':
+        freq = '5 min'
+        periods = (ndays * 24 * 12) + 1
+    elif variable == 'pm25':
+        freq = '60 min'
+        periods = (ndays * 24 * 1) + 1
+    else:
+        freq = '1 min'
+        periods = (ndays * 24 * 60) + 1
+    # Datetime range to search through
     datetime_range = pd.date_range('{}-{}-01 00:00:00'.format(yyyy, mm),
-                                   periods=((ndays * 24 * 12) + 1),
-                                   freq='5 min')
+                                   periods=periods, freq=freq)
     # Loop over datetimes
     for dt, i in zip(datetime_range, range(len(datetime_range))):
         # Attempt to retrieve data via API
@@ -150,7 +154,7 @@ def download_month(variable, yyyy, mm):
                 except UnboundLocalError:  # 1st time, initialise df
                     df = temp_df
         # Indicate progress
-        perc = i / ((ndays * 24 * 12) + 1) * 100  # percentage progress
+        perc = i / periods * 100  # percentage progress
         print('    {:000.1f}%'.format(perc), end='\r', flush=True)
     print()  # start new line
     # Print summary of number of records
@@ -174,6 +178,6 @@ if __name__ == '__main__':
         month_ago = (pd.datetime.today() - pd.Timedelta(1, 'M'))  # ~1 month ago (not exact)
         yyyy, mm = month_ago.strftime('%Y_%m').split('_')
     # Loop over variables
-    for variable in ['rainfall', 'wind-speed', 'wind-direction', 'air-temperature',
-                     'relative-humidity', 'pm25']:
+    for variable in ['pm25', 'rainfall', 'wind-speed', 'wind-direction', 'air-temperature',
+                     'relative-humidity',]:
         download_month(variable, yyyy, mm)

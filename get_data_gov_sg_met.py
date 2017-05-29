@@ -2,7 +2,8 @@
 
 """
 get_data_gov_sg_met.py:
-    Download meteorological station data for a specific month via the data.gov.sg APIs.
+    Download meteorological station data (and air quality data) for a specific month via the
+    data.gov.sg APIs.
 
 API key requirement:
     In order to use this script, an API key needs to be obtained via
@@ -98,7 +99,7 @@ def retrieve_data_via_api(variable, dt, n_attempts=10):
                 result = None
         r.close()
     except (requests.exceptions.SSLError, requests.exceptions.ConnectionError,
-            requests.exceptions.ConnectTimeout):
+            requests.exceptions.ConnectTimeout, KeyError):
         # If connection failed, sleep one minute, then retry recursively (up to n_attempts)
         if n_attempts > 1:
             print('    dt = {}, error = {}, (n_attempts-1) = {}. '

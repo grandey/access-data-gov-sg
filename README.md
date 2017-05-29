@@ -6,8 +6,8 @@ Exploration, downloading and post-processing of data from [data.gov.sg](https://
 ## Software
 1. [explore_data_gov_sg_api.ipynb](explore_data_gov_sg_api.ipynb) - initial exploration of the
 data.gov.sg APIs for meteorological station data.
-1. [get_data_gov_sg_met.py](get_data_gov_sg_met.py) - download meteorological station data for a
-specific month via the data.gov.sg APIs, and save in gzipped CSV files.
+1. [get_data_gov_sg_met.py](get_data_gov_sg_met.py) - download meteorological station data (and
+air quality data) for a specific month via the data.gov.sg APIs, and save in gzipped CSV files.
 
 The software contained in this repository is released under the MIT License.
 
@@ -22,7 +22,7 @@ where <today> is the date on which the file was created. For example,
 
 ### Time interval
 When querying the API, the following time intervals are used:
-1-hour for pm25; 5-minutes for rainfall; and 1-minute for for the other variables.
+1-hour for pm25; 5-minutes for rainfall; and 1-minute for the other variables.
 
 ### Metadata
 Based on [explore_data_gov_sg_api.ipynb](explore_data_gov_sg_api.ipynb), the important metadata for

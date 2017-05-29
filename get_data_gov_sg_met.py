@@ -15,7 +15,7 @@ Usage:
         ./get_data_gov_sg_met.py
     This can be performed automatically on e.g. the 2nd day of each month using crontab:
         0 0 2 * * tar -zcf <path_to_here>/get_data_gov_sg_met.py
-    
+
 Output files:
     Gzipped CSV files, corresponding to different variables, will be saved in data_gov_sg_met_v1/
     The file naming convention is as follows:
@@ -23,6 +23,11 @@ Output files:
     where <today> is the date on which the file was created.
     For example,
         data_gov_sg_met_v1/wind-speed_2017-02_c20170526.csv.gz
+
+Time interval:
+    When querying the API, a time interval of 5-minutes is used. Hence, the shortest time interval
+    in the output files is 5-minutes, even if input data are available at a more frequent time
+    resolution.
 
 Information about input data:
     For information about the input data used to derive the output CSV files, please see

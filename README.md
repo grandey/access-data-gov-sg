@@ -20,6 +20,11 @@ The file naming convention is as follows:
 where <today> is the date on which the file was created. For example,
     `data_gov_sg_met_v1/wind-speed_2017-02_c20170526.csv.gz`.
 
+### Time interval
+When querying the API, a time interval of **5-minutes** is used. Hence, the shortest time interval
+in the output files is 5-minutes, even if input data are available at a more frequent time
+resolution.
+
 ### Metadata
 Based on [explore_data_gov_sg_api.ipynb](explore_data_gov_sg_api.ipynb), the important metadata for
 each variable are as follows:

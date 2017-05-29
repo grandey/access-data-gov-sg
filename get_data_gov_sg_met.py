@@ -22,10 +22,10 @@ Output files:
         data_gov_sg_met_v1/<variable>_<yyyy-mm>_c<today>.csv.gz
     where <today> is the date on which the file was created.
     For example,
-        data_gov_sg_met_v1/wind-speed_2017-02_c20170526140800.csv.gz
+        data_gov_sg_met_v1/wind-speed_2017-02_c20170526.csv.gz
 
 Information about input data:
-    For information about input data used to derive the output CSV files, please see
+    For information about the input data used to derive the output CSV files, please see
     https://developers.data.gov.sg, https://data.gov.sg/open-data-licence, and
     https://data.gov.sg/api-terms.
     

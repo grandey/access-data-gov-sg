@@ -69,7 +69,8 @@ def retrieve_data_via_api(variable, dt, n_attempts=10):
         # Try to connect to API
         r = requests.get('https://api.data.gov.sg/v1/environment/{}'.format(variable),
                          headers={'api-key': my_key},
-                         params={'date_time': dt.strftime('%Y-%m-%dT%H:%M:%S')})
+                         params={'date_time': dt.strftime('%Y-%m-%dT%H:%M:%S')},
+                         timeout=30)
         if r.status_code == 200:
             # If API connection was successful, load data into DataFrame, unless no data present
             if len(r.json()['items'][0]['readings']) >= 1:
@@ -93,7 +94,8 @@ def retrieve_data_via_api(variable, dt, n_attempts=10):
                       'FAILED TO RETRIEVE DATA.'.format(dt, r.status_code, (n_attempts-1)))
                 result = None
         r.close()
-    except (requests.exceptions.SSLError, requests.exceptions.ConnectionError):
+    except (requests.exceptions.SSLError, requests.exceptions.ConnectionError,
+            requests.exceptions.ConnectTimeout):
         # If connection failed, sleep one minute, then retry recursively (up to n_attempts)
         if n_attempts > 1:
             print('    dt = {}, error = {}, (n_attempts-1) = {}. '

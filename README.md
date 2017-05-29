@@ -44,5 +44,11 @@ For further information, please see:
 1. The [Singapore Open Data License](https://data.gov.sg/open-data-licence); *and*
 1. The [API Terms of Service](https://data.gov.sg/api-terms).
 
+If you use any of the data published in this repository, I recommend including an acknowledgement
+that makes clear that the data are derived from data published by data.gov.sg, e.g.
+*"The data have been downloaded from https://github.com/grandey/access-data-gov-sg, and are
+derived from data published by data.gov.sg (https://data.gov.sg) under the terms of the
+Singapore Open Data License version 1.0 (https://data.gov.sg/open-data-licence)."*
+
 ## Author
 Benjamin S. Grandey, 2017

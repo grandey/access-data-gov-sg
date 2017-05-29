@@ -7,7 +7,7 @@ Exploration, downloading and post-processing of data from [data.gov.sg](https://
 1. [explore_data_gov_sg_api.ipynb](explore_data_gov_sg_api.ipynb) - initial exploration of the
 data.gov.sg APIs for meteorological station data.
 1. [get_data_gov_sg_met.py](get_data_gov_sg_met.py) - download meteorological station data for a
-specified month via the data.gov.sg APIs, and save in gzipped CSV files.
+specific month via the data.gov.sg APIs, and save in gzipped CSV files.
 
 The software contained in this repository is released under the MIT License.
 

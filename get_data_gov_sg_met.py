@@ -2,7 +2,7 @@
 
 """
 get_data_gov_sg_met.py:
-    Download meteorological station data for a specified month via the data.gov.sg APIs.
+    Download meteorological station data for a specific month via the data.gov.sg APIs.
 
 API key requirement:
     In order to use this script, an API key needs to be obtained via

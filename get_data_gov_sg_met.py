@@ -100,7 +100,7 @@ def retrieve_data_via_api(variable, dt, n_attempts=10):
                 result = None
         r.close()
     except (requests.exceptions.SSLError, requests.exceptions.ConnectionError,
-            requests.exceptions.ConnectTimeout):
+            requests.exceptions.ConnectTimeout, requests.exceptions.ReadTimeout):
         # If connection failed, sleep 10s, then retry recursively (up to n_attempts)
         if n_attempts > 1:
             print('    dt = {}, error = {}, (n_attempts-1) = {}. '

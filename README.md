@@ -51,7 +51,7 @@ For further information, please see:
 1. The [Singapore Open Data License](https://data.gov.sg/open-data-licence); *and*
 1. The [API Terms of Service](https://data.gov.sg/api-terms).
 
-### Suggested acknowledgment
+### Suggested acknowledgement
 If you use any of the data published in this repository, I recommend including an acknowledgement
 that makes it clear that the data are derived from data published by data.gov.sg, e.g.
 
@@ -63,3 +63,9 @@ For reproducibility, it might also be a good idea to mention the GitHub commit i
 
 ## Author
 Benjamin S. Grandey, 2017
+
+## Acknowledgements
+This software has been developed in order to facilitate research conducted at the
+Singapore-MIT Alliance for Research and Technology (SMART), supported by the National Research
+Foundation (NRF), Prime Minister’s Office, Singapore under its Campus for Research Excellence and
+Technological Enterprise (CREATE) programme.
